@@ -1,9 +1,9 @@
 from django.urls import path
-from . import views
+from .views import index, stock_data
 
 app_name = "public"
 
 urlpatterns = [
-    path('', views.index, name="index"),
-    path('about', views.about, name="about")
+    path('api/data', stock_data.as_view()),
+    path('', index, name="index")
 ]
