@@ -2,8 +2,6 @@ from django.http import HttpResponse, HttpRequest
 from django.http.response import JsonResponse
 from django.shortcuts import render
 
-import quandl
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 

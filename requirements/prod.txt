@@ -1,4 +1,4 @@
 Django == 3.2.3
 requests
 djangorestframework
-yfinance
+pandas_datareader
