@@ -19,6 +19,8 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'theme/css/styles.css' %}" rel="stylesheet" />
+        <!-- Plotly graph -->
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
         
     </head>
     <body>
@@ -50,5 +52,32 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
             <!-- Core theme JS-->
             <script src="{% static 'theme/js/scripts.js' %}"></script>
+            <!-- Get data from QUANDL -->
+            <script>
+                var endpointNQ = "https://www.quandl.com/api/v3/datasets/NASDAQOMX/NDX.json?start_date=2003-02-01&end_date=2003-05-05&order=asc&column_index=1&api_key=yAC6vvaySyUvWNCkHWFD";
+                var nq, sp, dw;
+                $.ajax({
+                    method: "GET",
+                    url: endpointNQ,
+                    success: function(data){
+                        var nq = data;
+                        data_processing(nq);
+                    },
+                    error: function(error_data){
+                        console.log("error");
+                        console.log(error_data);
+                    },
+                });
+                function data_processing(arr) {
+                    console.log(arr);
+                }   
+            </script>
+            <script>
+                TESTER = document.getElementById('tester');
+                Plotly.newPlot( TESTER, [{
+                x: [1, 2, 3, 4, 5],
+                y: [1, 2, 4, 8, 16] }], {
+                margin: { t: 0 } } );
+            </script>
     </body>
 </html>
