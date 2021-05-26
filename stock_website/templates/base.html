@@ -69,15 +69,37 @@
                     },
                 });
                 function data_processing(arr) {
-                    console.log(arr);
+                    console.log(arr.dataset.data)
                 }   
             </script>
             <script>
-                TESTER = document.getElementById('tester');
-                Plotly.newPlot( TESTER, [{
-                x: [1, 2, 3, 4, 5],
-                y: [1, 2, 4, 8, 16] }], {
-                margin: { t: 0 } } );
+                var SP = document.getElementById('sp-graph');
+                var NQ = document.getElementById('nq-graph');
+                var DW = document.getElementById('dw-graph');
+
+                var date = ['2018-01-01','2018-01-02','2018-01-03','2018-01-04','2018-01-05'];
+
+                var SPdata = [{
+                    type: "scatter",
+                    date,
+                    y: [1, 2, 4, 8, 16],
+                    line: {color: 'green', width: 4, shape: 'spline'}
+                }]
+                var NQdata = [{
+                    date,
+                    y: [1, 2, 4, 8, 16],
+                    line: {color: 'green', width: 4, shape: 'spline'}
+                }]  
+                var DWdata = [{
+                    date,
+                    y: [1, 2, 4, 8, 16],
+                    line: {color: 'green', width: 4, shape: 'spline'}
+                }]
+
+                Plotly.newPlot( SP, SPdata, {margin: { t: 0 } } );
+                Plotly.newPlot( NQ, NQdata, {margin: { t: 0 } } );
+                Plotly.newPlot( DW, DWdata, {margin: { t: 0 } } );
+
             </script>
     </body>
 </html>
