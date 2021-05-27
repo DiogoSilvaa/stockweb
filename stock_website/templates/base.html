@@ -52,24 +52,91 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
             <!-- Core theme JS-->
             <script src="{% static 'theme/js/scripts.js' %}"></script>
-            <!-- Get data from QUANDL -->
+            <!-- Get data from Alphavantage -->
             <script>
-                var endpointNQ = "https://www.quandl.com/api/v3/datasets/NASDAQOMX/NDX.json?start_date=2003-02-01&end_date=2003-05-05&order=asc&column_index=1&api_key=yAC6vvaySyUvWNCkHWFD";
+                
+                var endpointNQ = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=QQQ&outputsize=full&apikey=RE1L9V2O9V5IUAQJ";
+                var endpointDW = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=DIA&outputsize=full&apikey=RE1L9V2O9V5IUAQJ";
+                var endpointSP = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=SPY&outputsize=full&apikey=RE1L9V2O9V5IUAQJ";
+                var endpointNQ_SMA = "https://www.alphavantage.co/query?function=SMA&symbol=QQQ&interval=daily&time_period=150&series_type=close&apikey=RE1L9V2O9V5IUAQJ";
+                var endpointDW_SMA = "https://www.alphavantage.co/query?function=SMA&symbol=DIA&interval=daily&time_period=150&series_type=close&apikey=RE1L9V2O9V5IUAQJ";
+                var endpointSP_SMA = "https://www.alphavantage.co/query?function=SMA&symbol=SPY&interval=daily&time_period=150&series_type=close&apikey=RE1L9V2O9V5IUAQJ";
                 var nq, sp, dw;
+                
                 $.ajax({
                     method: "GET",
-                    url: endpointNQ,
+                    url: endpointSP,
                     success: function(data){
-                        var nq = data;
-                        data_processing(nq);
+                        sp = data_processing(data);
                     },
                     error: function(error_data){
                         console.log("error");
                         console.log(error_data);
                     },
                 });
-                function data_processing(arr) {
-                    console.log(arr.dataset.data)
+
+                $.ajax({
+                    method: "GET",
+                    url: endpointNQ,
+                    success: function(data){
+                        nq = data_processing(data);
+                    },
+                    error: function(error_data){
+                        console.log("error");
+                        console.log(error_data);
+                    },
+                });
+
+                $.ajax({
+                    method: "GET",
+                    url: endpointDW,
+                    success: function(data){
+                        dw = data_processing(data);
+                    },
+                    error: function(error_data){
+                        console.log("error");
+                        console.log(error_data);
+                    },
+                });
+
+                $.ajax({
+                    method: "GET",
+                    url: endpointSP_SMA,
+                    success: function(data){
+                        //sp = data_processing(data);
+                    },
+                    error: function(error_data){
+                        console.log("error");
+                        console.log(error_data);
+                    },
+                });
+
+                $.ajax({
+                    method: "GET",
+                    url: endpointNQ_SMA,
+                    success: function(data){
+                        //nq = data_processing(data);
+                    },
+                    error: function(error_data){
+                        console.log("error");
+                        console.log(error_data);
+                    },
+                });
+
+                $.ajax({
+                    method: "GET",
+                    url: endpointDW_SMA,
+                    success: function(data){
+                        //dw = data_processing(data);
+                    },
+                    error: function(error_data){
+                        console.log("error");
+                        console.log(error_data);
+                    },
+                });
+
+                function data_processing(obj) {
+                    console.log(obj["Time Series (Daily)"][0]);
                 }   
             </script>
             <script>
