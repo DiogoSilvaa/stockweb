@@ -21,6 +21,8 @@
         <link href="{% static 'theme/css/styles.css' %}" rel="stylesheet" />
         <!-- Plotly graph -->
         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <!-- lodash -->
+        <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
         
     </head>
     <body>
@@ -55,12 +57,9 @@
             <!-- Get data from Alphavantage -->
             <script>
                 
-                var endpointNQ = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=QQQ&outputsize=full&apikey=RE1L9V2O9V5IUAQJ";
-                var endpointDW = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=DIA&outputsize=full&apikey=RE1L9V2O9V5IUAQJ";
-                var endpointSP = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=SPY&outputsize=full&apikey=RE1L9V2O9V5IUAQJ";
-                var endpointNQ_SMA = "https://www.alphavantage.co/query?function=SMA&symbol=QQQ&interval=daily&time_period=150&series_type=close&apikey=RE1L9V2O9V5IUAQJ";
-                var endpointDW_SMA = "https://www.alphavantage.co/query?function=SMA&symbol=DIA&interval=daily&time_period=150&series_type=close&apikey=RE1L9V2O9V5IUAQJ";
-                var endpointSP_SMA = "https://www.alphavantage.co/query?function=SMA&symbol=SPY&interval=daily&time_period=150&series_type=close&apikey=RE1L9V2O9V5IUAQJ";
+                var endpointNQ = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=QQQ&outputsize=compact&apikey=RE1L9V2O9V5IUAQJ";
+                var endpointDW = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=DIA&outputsize=compact&apikey=RE1L9V2O9V5IUAQJ";
+                var endpointSP = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=SPY&outputsize=compact&apikey=RE1L9V2O9V5IUAQJ";
                 var nq, sp, dw;
                 
                 $.ajax({
@@ -68,6 +67,23 @@
                     url: endpointSP,
                     success: function(data){
                         sp = data_processing(data);
+                        dates = sp[0];
+                        prices = sp[1];
+                        if (prices[0] < prices[prices.length-1]){
+                            trend = 'green';
+                        }
+                        else{
+                            trend = 'red';
+                        }
+                        var SP = document.getElementById('sp-graph');
+                        var SPdata = [{
+                            type: "scatter",
+                            x: dates,
+                            y: prices,
+                            line: {color: trend, width: 4}
+                        }]
+                        Plotly.newPlot( SP, SPdata, {margin: { t: 0 } } );
+
                     },
                     error: function(error_data){
                         console.log("error");
@@ -80,6 +96,21 @@
                     url: endpointNQ,
                     success: function(data){
                         nq = data_processing(data);
+                        dates = nq[0];
+                        prices = nq[1];
+                        if (prices[0] < prices[prices.length-1]){
+                            trend = 'green';
+                        }
+                        else{
+                            trend = 'red';
+                        }
+                        var NQ = document.getElementById('nq-graph');
+                        var NQdata = [{
+                            x: dates,
+                            y: prices,
+                            line: {color: trend, width: 4}
+                        }]
+                        Plotly.newPlot( NQ, NQdata, {margin: { t: 0 } } );
                     },
                     error: function(error_data){
                         console.log("error");
@@ -92,42 +123,21 @@
                     url: endpointDW,
                     success: function(data){
                         dw = data_processing(data);
-                    },
-                    error: function(error_data){
-                        console.log("error");
-                        console.log(error_data);
-                    },
-                });
-
-                $.ajax({
-                    method: "GET",
-                    url: endpointSP_SMA,
-                    success: function(data){
-                        //sp = data_processing(data);
-                    },
-                    error: function(error_data){
-                        console.log("error");
-                        console.log(error_data);
-                    },
-                });
-
-                $.ajax({
-                    method: "GET",
-                    url: endpointNQ_SMA,
-                    success: function(data){
-                        //nq = data_processing(data);
-                    },
-                    error: function(error_data){
-                        console.log("error");
-                        console.log(error_data);
-                    },
-                });
-
-                $.ajax({
-                    method: "GET",
-                    url: endpointDW_SMA,
-                    success: function(data){
-                        //dw = data_processing(data);
+                        dates = dw[0];
+                        prices = dw[1];
+                        if (prices[0] < prices[prices.length-1]){
+                            trend = 'green';
+                        }
+                        else{
+                            trend = 'red';
+                        }
+                        var DW = document.getElementById('dw-graph');
+                        var DWdata = [{
+                            x: dates,
+                            y: prices,
+                            line: {color: trend, width: 4}
+                        }]
+                        Plotly.newPlot( DW, DWdata, {margin: { t: 0 } } );
                     },
                     error: function(error_data){
                         console.log("error");
@@ -136,36 +146,12 @@
                 });
 
                 function data_processing(obj) {
-                    console.log(obj["Time Series (Daily)"][0]);
+                    prices = _.reverse(_.map(obj["Time Series (Daily)"], "4. close"));
+                    dates = Object.keys(obj["Time Series (Daily)"]);
+                    dates = _.reverse(dates);
+                    
+                    return [dates,prices]
                 }   
-            </script>
-            <script>
-                var SP = document.getElementById('sp-graph');
-                var NQ = document.getElementById('nq-graph');
-                var DW = document.getElementById('dw-graph');
-
-                var date = ['2018-01-01','2018-01-02','2018-01-03','2018-01-04','2018-01-05'];
-
-                var SPdata = [{
-                    type: "scatter",
-                    date,
-                    y: [1, 2, 4, 8, 16],
-                    line: {color: 'green', width: 4, shape: 'spline'}
-                }]
-                var NQdata = [{
-                    date,
-                    y: [1, 2, 4, 8, 16],
-                    line: {color: 'green', width: 4, shape: 'spline'}
-                }]  
-                var DWdata = [{
-                    date,
-                    y: [1, 2, 4, 8, 16],
-                    line: {color: 'green', width: 4, shape: 'spline'}
-                }]
-
-                Plotly.newPlot( SP, SPdata, {margin: { t: 0 } } );
-                Plotly.newPlot( NQ, NQdata, {margin: { t: 0 } } );
-                Plotly.newPlot( DW, DWdata, {margin: { t: 0 } } );
 
             </script>
     </body>
