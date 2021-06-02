@@ -1,3 +1,4 @@
 stock_website/__pycache__
-stock_website/apps/__pycache__
-stock_website/apps/public/__pycache__
+apps/__pycache__
+apps/public/__pycache__
+apps/public/migrations/__pycache__
