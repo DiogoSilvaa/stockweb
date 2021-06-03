@@ -60,6 +60,7 @@
                 var endpointNQ = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=QQQ&outputsize=compact&apikey=RE1L9V2O9V5IUAQJ";
                 var endpointDW = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=DIA&outputsize=compact&apikey=RE1L9V2O9V5IUAQJ";
                 var endpointSP = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=SPY&outputsize=compact&apikey=RE1L9V2O9V5IUAQJ";
+                var endpointAPI = "https://b91aa7cadb47.ngrok.io/api/data"
                 var nq, sp, dw;
                 
                 $.ajax({
@@ -138,6 +139,18 @@
                             line: {color: trend, width: 4}
                         }]
                         Plotly.newPlot( DW, DWdata, {margin: { t: 0 } } );
+                    },
+                    error: function(error_data){
+                        console.log("error");
+                        console.log(error_data);
+                    },
+                });
+
+                $.ajax({
+                    method: "GET",
+                    url: endpointAPI,
+                    success: function(data){
+                        console.log(data.dw)
                     },
                     error: function(error_data){
                         console.log("error");

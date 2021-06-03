@@ -13,19 +13,19 @@ def index(request: HttpRequest) -> HttpResponse:
 
 class day_predictions(APIView):
 
-    def post(self, request):
+    def post(self, request):   
+        """ Try catch error """
         data = request.data
         now = datetime.now()
-        new_prediction, available = Prediction.objects.get_or_create(date=now, sp=data["sp"], nq=data["nq"], dw=data["dw"])
-        if available:
+        new_prediction, is_new = Prediction.objects.get_or_create(date=now, sp=data["sp"], nq=data["nq"], dw=data["dw"])
+        if is_new:
             new_prediction.save()
-        predictions = Prediction.objects.all()
-        print(predictions)
-        return Response(data)
+        #predictions = Prediction.objects.all()
+        print(new_prediction.sp, new_prediction.nq, new_prediction.dw)
+        return Response()
 
     def get(self, request):
-        now = datetime.now()
-        todayPrediction = Prediction.objects.get(date=now)
+        todayPrediction = Prediction.objects.latest('date')
         jsonPred = predictionSerializer(todayPrediction)
         return Response(jsonPred.data)
         
