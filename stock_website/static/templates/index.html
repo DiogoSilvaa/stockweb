@@ -4,7 +4,7 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<header class="masthead">
+<header id="page-top" class="masthead">
     <div class="container h-100">
         <div class="row h-100 align-items-center justify-content-center text-center">
             <div class="col-lg-10 align-self-end">
@@ -32,7 +32,7 @@
     </div>
 </section>
 <!-- Technologies -->
-<section class="page-section bg-black" id="interests">
+<section class="page-section bg-black" id="tech">
     <div class="container">
         <h2 class="text-center text-light mt-0">Interests</h2>
         <hr class="divider my-4" />
@@ -103,9 +103,9 @@
     </div>
 </div>
 <!-- Carousel -->
-<section class="page-section" id="graphs">
+<section class="page-section" id="stocks">
     <div class="container">
-        <div id="carouselExampleIndicators" class="carousel slide" data-interval="false" data-ride="carousel">
+        <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-interval="false" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                 <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -118,10 +118,10 @@
                             <h2 class="text-black mx-auto"> S&P 500 </h2>
                         </div>
                         <div class="row mt-5">
-                            <div id="sp-graph" class="mx-auto" style="width:1200px;height:500px;"></div>
+                            <div id="sp-graph" class="mx-auto" style="width:1100px;height:500px;"></div>
                         </div>
                         <div class="row mt-2">
-                            <p class="mx-auto"> UP OR DOWN </p>
+                            <p id="sp-show" class="mx-auto"></p>
                         </div>
                     </div>
                 </div>
@@ -131,10 +131,10 @@
                             <h2 class="text-black mx-auto"> Nasdaq-100 </h2>
                         </div>
                         <div class="row mt-5">
-                            <div id="nq-graph" class="mx-auto" style="width:1200px;height:500px;"></div>
+                            <div id="nq-graph" class="mx-auto" style="width:1100px;height:500px;"></div>
                         </div>
                         <div class="row mt-2">
-                            <p class="mx-auto"> UP OR DOWN </p>
+                            <p id="nq-show" class="mx-auto"></p>
                         </div>
                     </div>
                 </div>
@@ -144,10 +144,10 @@
                             <h2 class="text-black mx-auto"> Dow Jones </h2>
                         </div>
                         <div class="row mt-5">
-                            <div id="dw-graph" class="mx-auto" style="width:1200px;height:500px;"></div>
+                            <div id="dw-graph" class="mx-auto" style="width:1100px;height:500px;"></div>
                         </div>
                         <div class="row mt-2">
-                            <p class="mx-auto"> UP OR DOWN </p>
+                            <p id="dw-show" class="mx-auto"></p>
                         </div>
                     </div>
                 </div>
