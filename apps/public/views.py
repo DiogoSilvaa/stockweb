@@ -20,8 +20,11 @@ class day_predictions(APIView):
         new_prediction, is_new = Prediction.objects.get_or_create(date=now, sp=data["sp"], nq=data["nq"], dw=data["dw"])
         if is_new:
             new_prediction.save()
+            response = 'Data succesfully added.'
+        else:
+            response = 'Data was already previously added.'
         #predictions = Prediction.objects.all()
-        print(new_prediction.sp, new_prediction.nq, new_prediction.dw)
+        'print(new_prediction.sp, new_prediction.nq, new_prediction.dw)'
         return Response()
 
     def get(self, request):
